@@ -25,7 +25,7 @@ export function FinalCta() {
               pitanjima o uvođenju i korišćenju sistema.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button href={APP_URLS.demo} variant="inverse" size="lg" withArrow>
+              <Button href={APP_URLS.demo} newWindow variant="inverse" size="lg" withArrow>
                 Pogledaj demo
               </Button>
               <Button href={`#${SECTION_IDS.contact}`} variant="inverse-outline" size="lg">

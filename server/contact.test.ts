@@ -319,6 +319,20 @@ describe('POST /api/contact – odbijeni zahtevi', () => {
     expect((await post(VALID, { 'CF-Connecting-IP': '203.0.113.1' })).status).toBe(429);
   });
 
+  it('X-Forwarded-For: broji se poslednja adresa (dodaje je proxy), ne lažne adrese klijenta', async () => {
+    const { post } = await setup({
+      rateLimiter: createRateLimiter({ max: 1, windowMs: 60_000 }),
+      clientIpHeader: 'x-forwarded-for',
+    });
+
+    const forwarded = (spoofed: string, real: string) => ({
+      'X-Forwarded-For': `${spoofed}, ${real}`,
+    });
+    expect((await post(VALID, forwarded('198.51.100.1', '203.0.113.7'))).status).toBe(200);
+    expect((await post(VALID, forwarded('198.51.100.2', '203.0.113.7'))).status).toBe(429);
+    expect((await post(VALID, forwarded('198.51.100.3', '203.0.113.8'))).status).toBe(200);
+  });
+
   it('bez podešenog header-a lažni X-Forwarded-For ne zaobilazi rate limit', async () => {
     const { post } = await setup({ rateLimiter: createRateLimiter({ max: 1, windowMs: 60_000 }) });
 

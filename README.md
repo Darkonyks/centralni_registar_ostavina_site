@@ -32,7 +32,7 @@ Potreban je Node.js **22.13+** (preporučeno 24, zbog `node:sqlite`).
 
 ```bash
 npm install
-npm run dev       # razvojni server, http://localhost:5173 (sajt, /admin/ i /api/*)
+npm run dev       # razvojni server, http://localhost:5180 (sajt, /admin/ i /api/*; port: DEV_PORT)
 npm run build     # production build: dist/ (sajt + administracija) + dist-server/ (Node server)
 npm run preview   # pregled production build-a, http://localhost:4173 (sa /api/*)
 npm start         # produkcioni server: node dist-server/index.js (posle npm run build)
@@ -127,8 +127,9 @@ SQLite fajl na putanji `DATABASE_PATH` (kreira se automatski, zajedno sa direkto
   Bez označenog polja upit se ne šalje — proverava i server (400, upit se ne čuva).
 - Verzija politike: `PRIVACY_POLICY_VERSION` u `shared/consent.ts`. **Pri svakoj suštinskoj izmeni
   teksta povećati verziju** — novi upiti beleže novu verziju, a baner za kolačiće se prikazuje ponovo.
-- Rukovalac podacima: `PRIVACY_CONTROLLER` u `src/data/privacy.ts` — dopuniti punim nazivom,
-  sedištem i matičnim brojem kada budu potvrđeni.
+- Rukovalac podacima: `PRIVACY_CONTROLLER` u `src/data/privacy.ts`, sastavljen iz podataka o firmi
+  u `src/config/company.ts` (Geobiz PR Darko Nedic; isti podaci su u footer-u i u JSON-LD-u
+  `index.html`). Pri promeni podataka o firmi ažurirati oba fajla i povećati verziju politike.
 - Baner za kolačiće: „Samo neophodni“ / „Prihvatam sve“ (jednako istaknuti); izbor se upisuje u bazu
   (`POST /api/cookie-consent`) i čuva u kolačiću `crs_cookie_consent` (180 dana). Footer ima
   „Podešavanja kolačića“ za promenu izbora. Sajt trenutno koristi samo neophodne kolačiće.
@@ -180,7 +181,7 @@ ADMIN_USERNAME=admin
 ADMIN_PASSWORD_HASH=scrypt:32768:8:1:...
 
 # terminal 2
-npm run dev        # sajt: http://localhost:5173, administracija: http://localhost:5173/admin/
+npm run dev        # sajt: http://localhost:5180, administracija: http://localhost:5180/admin/
 ```
 
 Lokalna baza je `data/registar.db`. Pažnja: `.env.local` važi i za `npm run build`, pa ga pre
@@ -218,7 +219,10 @@ postavlja bezbednosna zaglavlja (CSP sa dozvolom za `challenges.cloudflare.com`,
 
 Iza proxy-ja podesiti `CLIENT_IP_HEADER` (`cf-connecting-ip` za Cloudflare, `x-forwarded-for` za
 nginx/Traefik), inače bi svi posetioci delili rate limit adrese proxy-ja. Header koristiti samo ako
-server nije direktno dostupan sa interneta, jer se inače može lažirati.
+server nije direktno dostupan sa interneta, jer se inače može lažirati. Iz liste
+`X-Forwarded-For` server uzima **poslednju** adresu (onu koju je dodao proxy ispred servera), pa
+lažne adrese koje klijent sam pošalje ne utiču na rate limit. Zato `x-forwarded-for` koristiti samo
+kada je ispred servera tačno jedan proxy; iza Cloudflare-a koristiti `cf-connecting-ip`.
 
 ## Produkcioni domen
 

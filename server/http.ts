@@ -59,12 +59,20 @@ export async function readJsonBody(req: IncomingMessage, maxBytes: number): Prom
 /**
  * IP adresa klijenta. Header (npr. `cf-connecting-ip`) se koristi samo ako je izričito
  * podešen, jer ga inače svako može lažirati.
+ *
+ * Kod liste (`X-Forwarded-For: klijent, proxy1, …`) uzima se poslednja vrednost: nju dodaje
+ * naš proxy, dok vrednosti levo od nje može poslati sam klijent.
  */
 export function getClientIp(req: IncomingMessage, trustedHeader?: string): string {
   if (trustedHeader) {
     const value = req.headers[trustedHeader];
-    const first = (Array.isArray(value) ? value[0] : value)?.split(',')[0]?.trim();
-    if (first) return first;
+    const joined = Array.isArray(value) ? value.join(',') : value;
+    const last = joined
+      ?.split(',')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .at(-1);
+    if (last) return last;
   }
   return req.socket.remoteAddress ?? 'unknown';
 }

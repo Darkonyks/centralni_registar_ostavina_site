@@ -6,7 +6,7 @@ dist-server
 .DS_Store
 
 # SQLite baza sa upitima i saglasnostima (lični podaci) – nikada u repozitorijum.
-data/
+/data/
 
 # Environment fajlovi sadrže tajne (Turnstile secret, SMTP lozinka, heš admin lozinke).
 .env

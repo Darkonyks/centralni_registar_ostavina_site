@@ -6,7 +6,7 @@
  */
 
 /** Verzija (datum) politike privatnosti, uključujući deo o kolačićima. */
-export const PRIVACY_POLICY_VERSION = '2026-10-01';
+export const PRIVACY_POLICY_VERSION = '2026-10-08';
 
 /** Polje u JSON telu kontakt forme: korisnik je označio saglasnost sa politikom privatnosti. */
 export const PRIVACY_CONSENT_FIELD = 'privacyConsent';

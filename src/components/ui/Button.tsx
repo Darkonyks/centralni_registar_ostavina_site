@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
 
 import { cx } from '../../lib/cx';
+import { NEW_WINDOW_ATTRS, NEW_WINDOW_LABEL } from '../../lib/newWindow';
 
 type ButtonVariant = 'primary' | 'secondary' | 'inverse' | 'inverse-outline';
 type ButtonSize = 'md' | 'lg';
@@ -28,6 +29,8 @@ interface ButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'hre
   size?: ButtonSize;
   /** Strelica posle teksta, za glavni poziv na akciju. */
   withArrow?: boolean;
+  /** Otvara link u novom prozoru/tabu (Demo i Aplikacija), uz napomenu za čitače ekrana. */
+  newWindow?: boolean;
 }
 
 /** Link stilizovan kao dugme. Sve akcije na sajtu vode na druge adrese, pa je element uvek `<a>`. */
@@ -37,12 +40,14 @@ export function Button({
   variant = 'primary',
   size = 'md',
   withArrow = false,
+  newWindow = false,
   className,
   ...rest
 }: ButtonProps) {
   return (
     <a
       href={href}
+      {...(newWindow && NEW_WINDOW_ATTRS)}
       className={cx(
         'group inline-flex items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition-colors duration-150',
         VARIANTS[variant],
@@ -52,6 +57,7 @@ export function Button({
       {...rest}
     >
       {children}
+      {newWindow && <span className="sr-only">{NEW_WINDOW_LABEL}</span>}
       {withArrow && (
         <ArrowRight
           aria-hidden="true"

@@ -75,10 +75,12 @@ export function Header() {
 
         <div className="flex shrink-0 items-center gap-2">
           <div className="hidden items-center gap-2 sm:flex">
-            <Button href={APP_URLS.demo} variant="secondary">
+            <Button href={APP_URLS.demo} newWindow variant="secondary">
               Demo
             </Button>
-            <Button href={APP_URLS.app}>Aplikacija</Button>
+            <Button href={APP_URLS.app} newWindow>
+              Aplikacija
+            </Button>
           </div>
 
           <button
@@ -121,10 +123,10 @@ export function Header() {
             </ul>
           </nav>
           <div className="mt-3 grid grid-cols-2 gap-3 border-t border-slate-200 pt-4 sm:hidden">
-            <Button href={APP_URLS.demo} variant="secondary" size="lg" className="px-4">
+            <Button href={APP_URLS.demo} newWindow variant="secondary" size="lg" className="px-4">
               Demo
             </Button>
-            <Button href={APP_URLS.app} size="lg" className="px-4">
+            <Button href={APP_URLS.app} newWindow size="lg" className="px-4">
               Aplikacija
             </Button>
           </div>

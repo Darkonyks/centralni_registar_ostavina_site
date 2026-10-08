@@ -2,7 +2,8 @@
 
 > **Živ dokument.** Ažurira se pri svakoj promeni strukture stranice, poruke, CTA linkova,
 > cenovnika, kontakt toka, dizajn principa ili arhitekture sajta.
-> Poslednja izmena: 2026-10-06 (novi model plaćanja: mesečno, 6 meseci −10%, 12 meseci −20%;
+> Poslednja izmena: 2026-10-08 (podaci o firmi Geobiz u footer-u i politici privatnosti;
+> Demo/Aplikacija u novom prozoru; ranije 2026-10-06: novi model plaćanja: mesečno, 6 meseci −10%, 12 meseci −20%;
 > besplatna prva tri meseca; grb Srbije kao znak; ranije Faza 3 — čuvanje upita u bazi,
 > administracija, politika privatnosti, saglasnost za kolačiće, napomena o PDV-u).
 
@@ -53,9 +54,14 @@ Centralna ideja: **svi predmeti, rokovi, ročišta i relevantne informacije nala
 - **Zabranjeno:** „100% bezbedno“, „nikada više nećete propustiti rok“, „najbolji sistem u Srbiji“,
   „potpuna eliminacija grešaka“ i slične tvrdnje.
 - **Bez izmišljenih** statistika, procenata, broja korisnika/predmeta, dostupnosti, testimoniala,
-  kontakt podataka (osim dostavljenog `kontakt@registarostavina.rs`), adrese, PIB-a i telefona.
-- Politika privatnosti opisuje samo stvarnu obradu na sajtu (vidi §9a); pravni podaci rukovaoca
-  (puni naziv, sedište, matični broj) dopunjuju se kada budu potvrđeni.
+  kontakt podataka, adrese, PIB-a i telefona — koriste se samo dostavljeni podaci
+  (`kontakt@registarostavina.rs` i podaci o firmi ispod).
+- Firma iza sajta i aplikacije (poslovna informacija, 2026-10-08): **Geobiz Projektovanje i izrada
+  softvera PR Darko Nedic**, Mirna 1, 22000 Sremska Mitrovica, tel. 063/12-61-227,
+  office@geo-biz.com, https://geo-biz.com/, MB 63583197, PIB 108624736. Jedini izvor:
+  `src/config/company.ts` (i JSON-LD u `index.html`). Prikazuje se u footer-u i kao rukovalac
+  podacima u politici privatnosti.
+- Politika privatnosti opisuje samo stvarnu obradu na sajtu (vidi §9a).
 - Cenovnik: bez naziva paketa (Basic/Professional…), bez oznaka „Najpopularnije“/„Preporučujemo“.
 - PDV (poslovna informacija, 2026-10-01): pružalac **nije obveznik PDV-a** i PDV se ne obračunava;
   ne koristiti formulacije poput „+ PDV“ ili „bez PDV-a“ (mogu se pogrešno razumeti kao dodatak na cenu).
@@ -75,19 +81,19 @@ Centralna ideja: **svi predmeti, rokovi, ročišta i relevantne informacije nala
 Jedna stranica, osam sekcija između header-a i footer-a. Tekstovi su u `src/data/content.ts`,
 cenovnik u `src/data/pricing.ts`, id-jevi sekcija u `src/data/navigation.ts` (`SECTION_IDS`).
 
-| #   | Sekcija (komponenta)                           | Anchor          | Sadržaj                                                                                                                                                                                                                   |
-| --- | ---------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| –   | Header (`layout/Header`)                       | –               | Znak + naziv; linkovi Prednosti, Pregled, Tok predmeta, Cenovnik, Kontakt; CTA Demo (sekundarno) i Aplikacija (primarno); puna navigacija od 1280 px, ispod toga hamburger meni (CTA vidljivi od 640 px).                 |
-| 1   | Hero (`sections/Hero`)                         | –               | H1 „Svi ostavinski predmeti. Jedno mesto. Potpuna preglednost.“, podnaslov, CTA „Otvori aplikaciju“ / „Pogledaj demo“, tri kratke stavke, mockup dashboard-a.                                                             |
-| 2   | Prednosti (`sections/Benefits`)                | `#prednosti`    | Četiri kartice: centralizovana evidencija, rokovi i ročišta, informacije na prvi pogled, brza pretraga.                                                                                                                   |
-| 3   | Dashboard (`sections/DashboardSection`)        | `#pregled`      | Tamna, vizuelno najjača sekcija; KPI kartice, ročišta danas, tekuća nedelja.                                                                                                                                              |
-| 4   | Tok predmeta (`sections/Lifecycle`)            | `#tok-predmeta` | Evidentiranje → Praćenje → Ročište → Odluka → Arhiva; napomene, statusi, uvoz/izvoz.                                                                                                                                      |
-| 5   | Kontrolisan pristup (`sections/AccessControl`) | `#bezbednost`   | Nalozi, uloge i privilegije, evidencija važnih aktivnosti; mockup uloge i istorije promena. (Nije u meniju; anchor i dalje radi.)                                                                                         |
-| 6   | Cenovnik (`sections/Pricing`)                  | `#cenovnik`     | Besplatan period, izbor načina plaćanja (mesečno / 6 / 12 meseci unapred), četiri kartice prema broju korisnika (vidi §5).                                                                                                |
-| 7   | Završni CTA (`sections/FinalCta`)              | –               | „Pogledajte kako izgleda rad sa centralizovanom evidencijom“; „Pogledaj demo“ (primarno) i „Pošalji upit“ (→ `#kontakt`).                                                                                                 |
-| 8   | Kontakt (`sections/Contact`)                   | `#kontakt`      | Naslov „Želite da vidite kako Centralni registar ostavina može da se uklopi u vaš način rada?“, `mailto:` kontakt email, kontakt forma sa tekstom politike privatnosti i obaveznim poljem za saglasnost (vidi §6, §9a).   |
-| –   | Footer (`layout/Footer`)                       | –               | Naziv, opis, „Kontakt: kontakt@registarostavina.rs“ (`mailto:`), linkovi Demo, Aplikacija, Politika privatnosti (`#politika-privatnosti`), dugme „Podešavanja kolačića“, `© {tekuća godina} Centralni registar ostavina`. |
-| –   | Baner za kolačiće (`consent/CookieBanner`)     | –               | Fiksiran pri dnu ekrana dok posetilac ne izabere „Samo neophodni“ / „Prihvatam sve“ (vidi §9a).                                                                                                                           |
+| #   | Sekcija (komponenta)                           | Anchor          | Sadržaj                                                                                                                                                                                                                                                                                                               |
+| --- | ---------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| –   | Header (`layout/Header`)                       | –               | Znak + naziv; linkovi Prednosti, Pregled, Tok predmeta, Cenovnik, Kontakt; CTA Demo (sekundarno) i Aplikacija (primarno); puna navigacija od 1280 px, ispod toga hamburger meni (CTA vidljivi od 640 px).                                                                                                             |
+| 1   | Hero (`sections/Hero`)                         | –               | H1 „Svi ostavinski predmeti. Jedno mesto. Potpuna preglednost.“, podnaslov, CTA „Otvori aplikaciju“ / „Pogledaj demo“, tri kratke stavke, mockup dashboard-a.                                                                                                                                                         |
+| 2   | Prednosti (`sections/Benefits`)                | `#prednosti`    | Četiri kartice: centralizovana evidencija, rokovi i ročišta, informacije na prvi pogled, brza pretraga.                                                                                                                                                                                                               |
+| 3   | Dashboard (`sections/DashboardSection`)        | `#pregled`      | Tamna, vizuelno najjača sekcija; KPI kartice, ročišta danas, tekuća nedelja.                                                                                                                                                                                                                                          |
+| 4   | Tok predmeta (`sections/Lifecycle`)            | `#tok-predmeta` | Evidentiranje → Praćenje → Ročište → Odluka → Arhiva; napomene, statusi, uvoz/izvoz.                                                                                                                                                                                                                                  |
+| 5   | Kontrolisan pristup (`sections/AccessControl`) | `#bezbednost`   | Nalozi, uloge i privilegije, evidencija važnih aktivnosti; mockup uloge i istorije promena. (Nije u meniju; anchor i dalje radi.)                                                                                                                                                                                     |
+| 6   | Cenovnik (`sections/Pricing`)                  | `#cenovnik`     | Besplatan period, izbor načina plaćanja (mesečno / 6 / 12 meseci unapred), četiri kartice prema broju korisnika (vidi §5).                                                                                                                                                                                            |
+| 7   | Završni CTA (`sections/FinalCta`)              | –               | „Pogledajte kako izgleda rad sa centralizovanom evidencijom“; „Pogledaj demo“ (primarno) i „Pošalji upit“ (→ `#kontakt`).                                                                                                                                                                                             |
+| 8   | Kontakt (`sections/Contact`)                   | `#kontakt`      | Naslov „Želite da vidite kako Centralni registar ostavina može da se uklopi u vaš način rada?“, `mailto:` kontakt email, kontakt forma sa tekstom politike privatnosti i obaveznim poljem za saglasnost (vidi §6, §9a).                                                                                               |
+| –   | Footer (`layout/Footer`)                       | –               | Naziv, opis, „Kontakt: kontakt@registarostavina.rs“ (`mailto:`), linkovi Demo, Aplikacija, Politika privatnosti (`#politika-privatnosti`), dugme „Podešavanja kolačića“, `© {tekuća godina} Centralni registar ostavina`; podaci o firmi (pun naziv, adresa, MB, PIB, telefon, email, `geo-biz.com` u novom prozoru). |
+| –   | Baner za kolačiće (`consent/CookieBanner`)     | –               | Fiksiran pri dnu ekrana dok posetilac ne izabere „Samo neophodni“ / „Prihvatam sve“ (vidi §9a).                                                                                                                                                                                                                       |
 
 Administracija je zasebna stranica `admin/index.html` (vidi §9b), nije deo javne stranice.
 
@@ -176,7 +182,7 @@ Zahtev (`application/json`):
   "message": "Tekst poruke",
   "turnstileToken": "...",
   "privacyConsent": true,
-  "privacyPolicyVersion": "2026-10-01",
+  "privacyPolicyVersion": "2026-10-08",
   "website": ""
 }
 ```
@@ -230,7 +236,7 @@ Sve kroz environment promenljive (vidi `.env.example`, README): `SMTP_HOST`, `SM
 
 - Tekst: `src/data/privacy.ts` (rukovalac, podaci iz forme, kolačići i evidencija izbora, zaštita
   forme/Cloudflare, primaoci, prava, bezbednost, izmene). Opisuje samo stvarnu obradu.
-- Verzija: `PRIVACY_POLICY_VERSION` (`shared/consent.ts`, sada `2026-10-01`). Pri suštinskoj izmeni
+- Verzija: `PRIVACY_POLICY_VERSION` (`shared/consent.ts`, sada `2026-10-08`). Pri suštinskoj izmeni
   teksta povećati verziju: novi upiti beleže novu verziju, a baner za kolačiće se prikazuje ponovo.
 - Rok čuvanja upita: najduže dve godine od poslednje komunikacije (brisanje iz administracije).
 - **Kolačići:** sajt koristi samo neophodne — `crs_cookie_consent` (izbor, 180 dana, čita ga i browser)
@@ -274,7 +280,8 @@ Sve kroz environment promenljive (vidi `.env.example`, README): `SMTP_HOST`, `SM
   primenjuje nezavisno; svaki neispravan zahtev se odbija pre Turnstile provere i slanja.
 - **Turnstile** (server-side provera) + **honeypot** protiv automatizovanog slanja.
 - **Rate limit**: 5 zahteva po IP adresi u 10 minuta (u memoriji procesa; jedna instanca).
-  IP iz proxy header-a samo kada je izričito podešen (`CLIENT_IP_HEADER`), inače adresa konekcije.
+  IP iz proxy header-a samo kada je izričito podešen (`CLIENT_IP_HEADER`), inače adresa konekcije;
+  iz liste (`X-Forwarded-For`) uzima se poslednja adresa, koju dodaje proxy (prve može lažirati klijent).
 - **Ograničenja**: telo ≤ 32 KB, maksimalne dužine polja, samo `application/json`
   (cross-site slanje zahteva CORS preflight, koji server ne odobrava).
 - **Bez injection-a**: plain-text email; jednoredna polja bez preloma redova i kontrolnih znakova, pa ne mogu
@@ -323,14 +330,14 @@ Sve kroz environment promenljive (vidi `.env.example`, README): `SMTP_HOST`, `SM
 | Footer      | „Kontakt: kontakt@registarostavina.rs“ (`mailto:`), „Demo“, „Aplikacija“, „Politika privatnosti“, „Podešavanja kolačića“ |
 
 - Demo: `https://demo.registarostavina.rs`, Aplikacija: `https://app.registarostavina.rs`
-  (`APP_URLS` u `src/config/site.ts`, zamena preko `VITE_DEMO_URL` / `VITE_APP_URL`), isti tab.
+  (`APP_URLS` u `src/config/site.ts`, zamena preko `VITE_DEMO_URL` / `VITE_APP_URL`); otvaraju se u novom prozoru (`target="_blank"`, `rel="noopener"`, napomena za čitače ekrana — `src/lib/newWindow.ts`).
 
 ## 13. SEO smernice
 
 - `lang="sr-Latn"`; tekst isključivo latinicom.
 - Title: `Centralni registar ostavina | Evidencija predmeta i rokova`; meta description iz Faze 1.
 - Canonical `https://registarostavina.rs/`, Open Graph + Twitter kartica, JSON-LD `WebSite`
-  (bez ocena i cena).
+  sa `publisher` (`Organization`: firma iz §3) — bez ocena i cena.
 - Tačno jedan H1; po jedan H2 za svaku sekciju (7 H2).
 - Cenovnik (svi iznosi) i kontakt email su u prerenderovanom HTML-u — ne zavise od JavaScript-a.
 - `robots.txt` (`Disallow: /admin/`, `Disallow: /api/`) i `sitemap.xml` (`lastmod` ažurirati pri
@@ -372,8 +379,7 @@ automatsko brisanje starih upita po isteku roka čuvanja.
 
 ## 16. Otvorena pitanja / kandidati za narednu fazu
 
-- **Rukovalac podacima**: dopuniti puni naziv, sedište i matični broj u `PRIVACY_CONTROLLER`
-  (`src/data/privacy.ts`); preporučuje se pravni pregled teksta politike privatnosti.
+- **Politika privatnosti**: preporučuje se pravni pregled teksta (`src/data/privacy.ts`).
 - Automatsko brisanje upita starijih od roka čuvanja (sada ručno iz administracije).
 - Pravi Turnstile ključevi, SMTP nalog i SPF/DKIM/DMARC za domen pošiljaoca pri postavljanju.
 - Rezervna kopija baze u produkciji (snapshot volumena).
@@ -383,12 +389,14 @@ automatsko brisanje starih upita po isteku roka čuvanja.
 
 ## 17. Istorija izmena
 
-| Datum      | Izmena                                                                                                                                                                                                                                                                                                                                                               |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-30 | Faza 1: one-page sajt (6 sekcija), prerender, SEO osnove, responsive i a11y provera, dokumentacija.                                                                                                                                                                                                                                                                  |
-| 2026-09-30 | Faza 2: cenovnik (4 paketa, godišnje plaćanje), kontakt sekcija i forma, Turnstile, `POST /api/contact` (Node server, SMTP), rate limit, honeypot, testovi (Vitest), meni do 1280 px, izmenjen završni CTA, kontakt u footer-u.                                                                                                                                      |
-| 2026-10-01 | Faza 3: SQLite baza (upiti, saglasnosti, sesije), administracija `/admin/` (upiti sa statusom saglasnosti, brisanje, saglasnosti za kolačiće), politika privatnosti uz formu i obavezna saglasnost (i na serveru), baner i `POST /api/cookie-consent`, napomena da pružalac nije obveznik PDV-a, upit se čuva i kad email ne uspe, `content-visibility`, Dockerfile. |
-| 2026-10-05 | Znak pored naziva sistema zamenjen grbom Srbije (`grb-srbija.svg`, optimizovan), u header-u, footer-u, administraciji i mockupu.                                                                                                                                                                                                                                     |
-| 2026-10-06 | Cenovnik: istaknut blok „Prva tri meseca potpuno besplatno“ iznad paketa (važi za sve pakete); test. Test-pomoćnici: `listen` izbegava portove koje `fetch` odbija, test-baze se zatvaraju posle testa.                                                                                                                                                              |
-| 2026-10-06 | Cenovnik: umesto samo godišnjeg plaćanja — mesečna pretplata, 6 meseci unapred (−10%) i 12 meseci unapred (−20%); izbor načina plaćanja (radio, CSS `:has()`), kartice sa uštedom; testovi.                                                                                                                                                                          |
-| 2026-10-06 | Nove mesečne cene: 1.500 / 2.500 / 3.500 / 4.500 RSD (popusti za 6 i 12 meseci unapred ostaju −10% / −20%).                                                                                                                                                                                                                                                          |
+| Datum      | Izmena                                                                                                                                                                                                                                                                                                                                                                  |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-30 | Faza 1: one-page sajt (6 sekcija), prerender, SEO osnove, responsive i a11y provera, dokumentacija.                                                                                                                                                                                                                                                                     |
+| 2026-09-30 | Faza 2: cenovnik (4 paketa, godišnje plaćanje), kontakt sekcija i forma, Turnstile, `POST /api/contact` (Node server, SMTP), rate limit, honeypot, testovi (Vitest), meni do 1280 px, izmenjen završni CTA, kontakt u footer-u.                                                                                                                                         |
+| 2026-10-01 | Faza 3: SQLite baza (upiti, saglasnosti, sesije), administracija `/admin/` (upiti sa statusom saglasnosti, brisanje, saglasnosti za kolačiće), politika privatnosti uz formu i obavezna saglasnost (i na serveru), baner i `POST /api/cookie-consent`, napomena da pružalac nije obveznik PDV-a, upit se čuva i kad email ne uspe, `content-visibility`, Dockerfile.    |
+| 2026-10-05 | Znak pored naziva sistema zamenjen grbom Srbije (`grb-srbija.svg`, optimizovan), u header-u, footer-u, administraciji i mockupu.                                                                                                                                                                                                                                        |
+| 2026-10-06 | Cenovnik: istaknut blok „Prva tri meseca potpuno besplatno“ iznad paketa (važi za sve pakete); test. Test-pomoćnici: `listen` izbegava portove koje `fetch` odbija, test-baze se zatvaraju posle testa.                                                                                                                                                                 |
+| 2026-10-06 | Cenovnik: umesto samo godišnjeg plaćanja — mesečna pretplata, 6 meseci unapred (−10%) i 12 meseci unapred (−20%); izbor načina plaćanja (radio, CSS `:has()`), kartice sa uštedom; testovi.                                                                                                                                                                             |
+| 2026-10-06 | Nove mesečne cene: 1.500 / 2.500 / 3.500 / 4.500 RSD (popusti za 6 i 12 meseci unapred ostaju −10% / −20%).                                                                                                                                                                                                                                                             |
+| 2026-10-08 | `.gitignore` je pravilom `data/` isključivao i `src/data/` (tekstovi, cenovnik, politika privatnosti, navigacija, mockup) — pravilo ograničeno na koren (`/data/`), a `src/data/*.ts` rekonstruisani iz ove dokumentacije (tekst politike treba pravno pregledati). `X-Forwarded-For`: uzima se poslednja adresa (rate limit se više ne može zaobići lažnim header-om). |
+| 2026-10-08 | Demo i Aplikacija se otvaraju u novom prozoru. Podaci o firmi (Geobiz PR Darko Nedic: adresa, MB, PIB, kontakt) u footer-u, kao rukovalac u politici privatnosti i u JSON-LD (`publisher`); `PRIVACY_POLICY_VERSION` → `2026-10-08`. Dev port 5180 (`DEV_PORT`).                                                                                                        |

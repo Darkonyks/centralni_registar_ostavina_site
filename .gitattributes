@@ -1,0 +1,5 @@
+# Repozitorijum koristi LF (vidi .editorconfig); bez ovoga Windows checkout (core.autocrlf)
+# pravi CRLF i `npm run format:check` pada.
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

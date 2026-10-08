@@ -50,6 +50,9 @@ export default defineConfig(({ mode, isSsrBuild }) => {
 
   return {
     plugins: [react(), tailwindcss(), api(env)],
+    // 5173 (podrazumevani Vite port) je na razvojnoj mašini zauzet; strictPort: greška umesto
+    // tihog prelaska na drugi port. Može se promeniti preko DEV_PORT.
+    server: { port: Number(env.DEV_PORT) || 5180, strictPort: true },
     build: {
       // Stranica je mala; jedan CSS fajl je brži od dodatnog deljenja.
       cssCodeSplit: false,

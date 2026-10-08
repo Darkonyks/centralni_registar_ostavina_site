@@ -42,10 +42,10 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href={APP_URLS.app} size="lg" withArrow>
+            <Button href={APP_URLS.app} newWindow size="lg" withArrow>
               Otvori aplikaciju
             </Button>
-            <Button href={APP_URLS.demo} size="lg" variant="secondary">
+            <Button href={APP_URLS.demo} newWindow size="lg" variant="secondary">
               Pogledaj demo
             </Button>
           </div>
