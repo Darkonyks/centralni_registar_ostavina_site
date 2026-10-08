@@ -1,0 +1,50 @@
+name: centralni-registar-ostavina-site
+
+services:
+  site:
+    build:
+      context: .
+      args:
+        VITE_TURNSTILE_SITE_KEY: ${VITE_TURNSTILE_SITE_KEY:?Postavi Turnstile site key}
+        VITE_DEMO_URL: ${VITE_DEMO_URL:-https://demo.registarostavina.rs}
+        VITE_APP_URL: ${VITE_APP_URL:-https://app.registarostavina.rs}
+
+    restart: unless-stopped
+    init: true
+
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "3000"
+      DATABASE_PATH: /app/data/registar.db
+      CLIENT_IP_HEADER: x-forwarded-for
+
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:?Postavi Turnstile secret}
+      CONTACT_RECIPIENT_EMAIL: ${CONTACT_RECIPIENT_EMAIL:-kontakt@registarostavina.rs}
+
+      SMTP_HOST: ${SMTP_HOST:?Postavi SMTP host}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_REQUIRE_TLS: ${SMTP_REQUIRE_TLS:-true}
+      SMTP_USER: ${SMTP_USER:?Postavi SMTP korisnika}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:?Postavi SMTP lozinku}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:?Postavi adresu posiljaoca}
+
+      ADMIN_USERNAME: ${ADMIN_USERNAME:?Postavi admin korisnika}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH:?Postavi admin hash}
+
+    ports:
+      - "${SITE_BIND_IP:?Postavi privatnu IP adresu}:3000:3000"
+
+    volumes:
+      - site_data:/app/data
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  site_data:
+    name: cro_site_data
